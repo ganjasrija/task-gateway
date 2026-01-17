@@ -1,0 +1,18 @@
+# Node
+node_modules/
+
+# Environment files
+.env
+backend/.env
+dashboard/.env
+checkout-page/.env
+
+# Build output
+dashboard/dist/
+checkout-page/dist/
+
+# OS / Editor files
+.DS_Store
+
+# Media / demo files
+*.mp4

@@ -1,0 +1,137 @@
+GET http://localhost:8000/health
+###API1
+GET http://localhost:8000/api/v1/test/merchant
+
+###API2
+POST http://localhost:8000/api/v1/orders
+X-Api-Key: key_test_abc123
+X-Api-Secret: secret_test_xyz789
+Content-Type: application/json
+
+{
+  "amount": 5000,
+  "currency": "INR",
+  "receipt": "receipt_123",
+  "notes": {
+    "customer_name": "John Doe"
+  }
+}
+###API3
+GET http://localhost:8000/api/v1/orders/order_c7x7c8p23wk
+X-Api-Key: key_test_abc123
+X-Api-Secret: secret_test_xyz789
+
+### API5 - Create Payment (Phase 5.1 - basic, no validation yet)
+POST http://localhost:8000/api/v1/payments
+X-Api-Key: key_test_abc123
+X-Api-Secret: secret_test_xyz789
+Content-Type: application/json
+
+{
+  "order_id": "order_c7x7c8p23wk",
+  "method": "upi"
+}
+### API5 - Create UPI Payment (VALID)
+POST http://localhost:8000/api/v1/payments
+X-Api-Key: key_test_abc123
+X-Api-Secret: secret_test_xyz789
+Content-Type: application/json
+
+{
+  "order_id": "order_c7x7c8p23wk",
+  "method": "upi",
+  "vpa": "user@paytm"
+}
+
+### API5 - Create UPI Payment (INVALID VPA)
+POST http://localhost:8000/api/v1/payments
+X-Api-Key: key_test_abc123
+X-Api-Secret: secret_test_xyz789
+Content-Type: application/json
+
+{
+  "order_id": "order_c7x7c8p23wk", 
+  "method": "upi",
+  "vpa": "user@@paytm"
+}
+
+### API6 - Get Payment by ID
+GET http://localhost:8000/api/v1/payments/pay_Qpb08rTMaeN1kMaE
+X-Api-Key: key_test_abc123
+X-Api-Secret: secret_test_xyz789
+
+### VALID CARD
+POST http://localhost:8000/api/v1/payments
+X-Api-Key: key_test_abc123
+X-Api-Secret: secret_test_xyz789
+Content-Type: application/json
+
+{
+  "order_id": "order_c7x7c8p23wk",
+  "method": "card",
+  "card": {
+    "number": "4111111111111111",
+    "expiry_month": "12",
+    "expiry_year": "2026",
+    "cvv": "123",
+    "holder_name": "John Doe"
+  }
+}
+
+### INVALID CARD NUMBER
+POST http://localhost:8000/api/v1/payments
+X-Api-Key: key_test_abc123
+X-Api-Secret: secret_test_xyz789
+Content-Type: application/json
+
+{
+  "order_id": "order_c7x7c8p23wk",
+  "method": "card",
+  "card": {
+    "number": "1234567890123456",
+    "expiry_month": "12",
+    "expiry_year": "2026",
+    "cvv": "123",
+    "holder_name": "John Doe"
+  }
+}
+###5.4.5
+POST http://localhost:8000/api/v1/payments
+X-Api-Key: key_test_abc123
+X-Api-Secret: secret_test_xyz789
+Content-Type: application/json
+
+{
+  "order_id": "order_c7x7c8p23wk",
+  "method": "upi",
+  "vpa": "user@paytm"
+}
+###Test endpoint
+GET http://localhost:8000/api/v1/test/merchant
+###
+GET http://localhost:8000/api/v1/payments
+X-Api-Key: key_test_abc123
+X-Api-Secret: secret_test_xyz789
+###
+GET http://localhost:8000/api/v1/payments
+X-Api-Key: key_test_abc123
+X-Api-Secret: secret_test_xyz789
+###
+GET http://localhost:8000/api/v1/orders/order_c7x7c8p23wk/public
+
+{
+  "id": "order_c7x7c8p23wk",
+  "amount": 5000,
+  "currency": "INR",
+  "status": "created"
+}
+###
+POST http://localhost:8000/api/v1/payments/public
+Content-Type: application/json
+
+{
+  "order_id": "order_c7x7c8p23wk",
+  "method": "upi",
+  "vpa": "user@paytm"
+}
+
